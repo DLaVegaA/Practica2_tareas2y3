@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TrackLim" parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
+
+    <style name="Theme.TrackLim" parent="Base.Theme.TrackLim" />
+
+    <!-- 1. Style for INACTIVE items (using your color selector) -->
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_nav_item_color</item>
+        <item name="itemTextColor">@color/bottom_nav_item_color</item>
+    </style>
+
+    <!-- 2. CREATE THE THEME OVERLAY for the ACTIVE item -->
+    <style name="Theme.App.BottomNavigationView" parent="">
+        <!-- This sets the pill background color -->
+        <item name="colorSecondaryContainer">@color/tracklim_red_coral</item>
+        <!-- This sets the icon and text color INSIDE the pill -->
+        <item name="colorOnSecondaryContainer">@android:color/black</item>
+    </style>
+
+</resources>
