@@ -12,7 +12,6 @@
 
 <img width="386" height="832" alt="image" src="https://github.com/user-attachments/assets/9a19c35f-f7fa-4d3f-8259-92b2bc8512c7" />
 
-
 ### Modo Oscuro
 
 <img width="386" height="836" alt="image" src="https://github.com/user-attachments/assets/6a1d59d5-1fbf-4919-ab4c-6063463c3a99" />
@@ -20,7 +19,6 @@
 <img width="380" height="837" alt="image" src="https://github.com/user-attachments/assets/955d667b-d2b0-4d99-8245-c0248f962228" />
 
 <img width="383" height="833" alt="image" src="https://github.com/user-attachments/assets/59f266dc-43eb-4fb6-bd0e-e26afe9868d8" />
-
 
 ## Descripción Detallada
 
@@ -51,6 +49,27 @@ El propósito de esta aplicación es ofrecer una experiencia inmersiva y temáti
   * **UI/UX:** Se optó por un diseño minimalista y oscuro (en el modo por defecto) para crear una experiencia inmersiva y elegante. La tipografía fue seleccionada cuidadosamente: **Rajdhani** para los títulos, por su estética moderna y técnica, y una fuente estándar de alta legibilidad para el cuerpo del texto.
   * **Navegación:** La jerarquía de tres niveles (Mapa -\> Detalle -\> Historial) fue diseñada para ser intuitiva, permitiendo al usuario profundizar en la información de manera natural. Las transiciones se inician a través de acciones contextuales (clic en un marcador del mapa, búsqueda) en lugar de botones genéricos.
   * **Modo Oscuro:** Se decidió implementar un interruptor de tema dentro de la app en lugar de depender del sistema para darle al usuario control total sobre la experiencia visual, una característica común en apps de contenido.
+
+## Implementación de Temas con SharedPreferences
+Una de las características clave de la aplicación es la capacidad de cambiar entre un tema claro y uno oscuro de forma manual, independientemente de la configuración del sistema operativo. Esta funcionalidad se implementó para dar al usuario un control total sobre la experiencia visual y para asegurar que la preferencia se mantenga entre sesiones.
+
+La implementación se basa en tres componentes principales:
+
+  1. **Almacenamiento de la Preferencia:** Se utiliza SharedPreferences como un mecanismo de almacenamiento ligero para guardar la elección del usuario. Se guarda un único valor booleano con la clave isNightMode. Esto garantiza que, si el usuario cierra y vuelve a abrir la aplicación, esta se inicie con el último tema seleccionado.
+
+  2. **Lógica de Cambio y Aplicación:** Toda la lógica reside en MainActivity.kt.
+
+   * Una función toggleTheme() se encarga de leer el estado actual desde SharedPreferences, invertirlo (de claro a oscuro o viceversa), guardar el nuevo estado y, finalmente, llamar a AppCompatDelegate.setDefaultNightMode().
+
+   * La llamada a setDefaultNightMode() es la que le indica al sistema que debe recrear la Activity actual, aplicando los recursos correspondientes al nuevo tema. El "parpadeo" que se observa durante el cambio es el resultado de este proceso de recreación.
+
+   * Para asegurar que la app siempre se inicie con el tema correcto, se llama a una función applySavedTheme() en el método onCreate() de la MainActivity, justo antes de setContentView(). Esto lee la preferencia guardada y establece el tema antes de que cualquier elemento de la interfaz sea dibujado, evitando un cambio de tema visualmente brusco al arrancar.
+
+  3. **Adaptación de la Interfaz de Usuario (UI):** La adaptación visual a cada tema se logra a través del sistema de recursos de Android. Se utilizan directorios con el calificador -night (por ejemplo, values-night y color-night).
+
+   * Recursos como los selectores de color para la barra de navegación (bottom_nav_item_color.xml) existen en dos versiones: una en res/color/ para el tema claro y otra en res/color-night/ para el oscuro.
+
+   * De esta manera, cuando AppCompatDelegate cambia el modo de la aplicación, el sistema operativo selecciona automáticamente el conjunto de recursos correcto sin necesidad de escribir código condicional en los layouts o en las clases de las Activities.
 
 ## Instrucciones para Ejecutar el Proyecto
 
