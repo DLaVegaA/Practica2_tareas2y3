@@ -4,6 +4,22 @@
 
 ## Capturas de Pantalla
 
+### Modo Claro
+
+<img width="382" height="834" alt="image" src="https://github.com/user-attachments/assets/c930ea61-8954-40a2-9443-c652405da3d5" />
+
+<img width="382" height="840" alt="image" src="https://github.com/user-attachments/assets/4819534f-0af7-4c01-9b1b-e599500df462" />
+
+<img width="386" height="832" alt="image" src="https://github.com/user-attachments/assets/9a19c35f-f7fa-4d3f-8259-92b2bc8512c7" />
+
+
+### Modo Oscuro
+
+<img width="386" height="836" alt="image" src="https://github.com/user-attachments/assets/6a1d59d5-1fbf-4919-ab4c-6063463c3a99" />
+
+<img width="380" height="837" alt="image" src="https://github.com/user-attachments/assets/955d667b-d2b0-4d99-8245-c0248f962228" />
+
+<img width="383" height="833" alt="image" src="https://github.com/user-attachments/assets/59f266dc-43eb-4fb6-bd0e-e26afe9868d8" />
 
 
 ## Descripción Detallada
