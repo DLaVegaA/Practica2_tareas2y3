@@ -59,17 +59,17 @@ La implementación se basa en tres componentes principales:
 
   2. **Lógica de Cambio y Aplicación:** Toda la lógica reside en MainActivity.kt.
 
-   * Una función toggleTheme() se encarga de leer el estado actual desde SharedPreferences, invertirlo (de claro a oscuro o viceversa), guardar el nuevo estado y, finalmente, llamar a AppCompatDelegate.setDefaultNightMode().
+     * Una función toggleTheme() se encarga de leer el estado actual desde SharedPreferences, invertirlo (de claro a oscuro o viceversa), guardar el nuevo estado y, finalmente, llamar a AppCompatDelegate.setDefaultNightMode().
 
-   * La llamada a setDefaultNightMode() es la que le indica al sistema que debe recrear la Activity actual, aplicando los recursos correspondientes al nuevo tema. El "parpadeo" que se observa durante el cambio es el resultado de este proceso de recreación.
+     * La llamada a setDefaultNightMode() es la que le indica al sistema que debe recrear la Activity actual, aplicando los recursos correspondientes al nuevo tema. El "parpadeo" que se observa durante el cambio es el resultado de este proceso de recreación.
 
-   * Para asegurar que la app siempre se inicie con el tema correcto, se llama a una función applySavedTheme() en el método onCreate() de la MainActivity, justo antes de setContentView(). Esto lee la preferencia guardada y establece el tema antes de que cualquier elemento de la interfaz sea dibujado, evitando un cambio de tema visualmente brusco al arrancar.
+     * Para asegurar que la app siempre se inicie con el tema correcto, se llama a una función applySavedTheme() en el método onCreate() de la MainActivity, justo antes de setContentView(). Esto lee la preferencia guardada y establece el tema antes de que cualquier elemento de la interfaz sea dibujado, evitando un cambio de tema visualmente brusco al arrancar.
 
   3. **Adaptación de la Interfaz de Usuario (UI):** La adaptación visual a cada tema se logra a través del sistema de recursos de Android. Se utilizan directorios con el calificador -night (por ejemplo, values-night y color-night).
 
-   * Recursos como los selectores de color para la barra de navegación (bottom_nav_item_color.xml) existen en dos versiones: una en res/color/ para el tema claro y otra en res/color-night/ para el oscuro.
+     * Recursos como los selectores de color para la barra de navegación (bottom_nav_item_color.xml) existen en dos versiones: una en res/color/ para el tema claro y otra en res/color-night/ para el oscuro.
 
-   * De esta manera, cuando AppCompatDelegate cambia el modo de la aplicación, el sistema operativo selecciona automáticamente el conjunto de recursos correcto sin necesidad de escribir código condicional en los layouts o en las clases de las Activities.
+     * De esta manera, cuando AppCompatDelegate cambia el modo de la aplicación, el sistema operativo selecciona automáticamente el conjunto de recursos correcto sin necesidad de escribir código condicional en los layouts o en las clases de las Activities.
 
 ## Instrucciones para Ejecutar el Proyecto
 
