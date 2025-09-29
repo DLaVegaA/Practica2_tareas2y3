@@ -24,10 +24,10 @@ El propósito de esta aplicación es ofrecer una experiencia inmersiva y temáti
 
 ## Características Técnicas
 
-  * **Arquitectura:** Navegación jerárquica de tres niveles implementada con Activities (`MainActivity`, `CircuitDetailActivity`, `WinnersActivity`) y Fragments (`ExploreFragment`).
-  * **Interfaz de Usuario (UI):** Diseños creados con `ConstraintLayout` para máxima flexibilidad y `RecyclerView` para mostrar eficientemente las listas de filtros y ganadores. Se utiliza `MaterialToolbar` y componentes personalizados para una UI consistente.
-  * **Navegación:** Se implementa la navegación entre Activities mediante `Intents` y el paso de datos de objetos complejos (`Circuit`) a través de la serialización con `kotlin-parcelize`.
-  * **Gestión de Datos:** Se utiliza una fuente de datos local en memoria para toda la información de los circuitos. La preferencia del tema oscuro se persiste localmente usando `SharedPreferences`.
+  * **Arquitectura:** Navegación jerárquica de tres niveles implementada con Activities (MainActivity, CircuitDetailActivity, WinnersActivity) y Fragments (ExploreFragment).
+  * **Interfaz de Usuario (UI):** Diseños creados con ConstraintLayout para máxima flexibilidad y RecyclerView para mostrar eficientemente las listas de filtros y ganadores. Se utiliza MaterialToolbar y componentes personalizados para una UI consistente.
+  * **Navegación:** Se implementa la navegación entre Activities mediante Intents y el paso de datos de objetos complejos (Circuit) a través de la serialización con kotlin-parcelize.
+  * **Gestión de Datos:** Se utiliza una fuente de datos local en memoria para toda la información de los circuitos. La preferencia del tema oscuro se persiste localmente usando SharedPreferences.
   * **Integraciones:** Uso del **SDK de Google Maps** para la visualización del mapa y la interacción con los marcadores.
 
 ## Decisiones de Diseño
@@ -47,37 +47,37 @@ El propósito de esta aplicación es ofrecer una experiencia inmersiva y temáti
 
 El proyecto utiliza la API de Google Maps, la cual requiere una clave de API para funcionar.
 
-1.  **Obtén una Clave de API:** Sigue la [guía oficial de Google](https://developers.google.com/maps/documentation/android-sdk/get-api-key) para crear un proyecto en Google Cloud Console, habilitar la API "Maps SDK for Android" y obtener tu clave.
+1.  **Obtén una Clave de API:** Sigue la guía oficial de Google para crear un proyecto en Google Cloud Console, habilitar la API "Maps SDK for Android" y obtener tu clave.
 2.  **Añade la Clave al Proyecto:**
-      * En la carpeta raíz de tu proyecto, busca o crea un archivo llamado `local.properties`.
+      * En la carpeta raíz de tu proyecto, busca o crea un archivo llamado local.properties.
       * Añade tu clave en una nueva línea con el siguiente formato:
-        ```
+        
         MAPS_API_KEY=AQUI_PEGA_TU_CLAVE_DE_API
-        ```
-      * El proyecto ya está configurado para leer esta clave de forma segura. No necesitas modificar el `AndroidManifest.xml`.
+        
+      * El proyecto ya está configurado para leer esta clave de forma segura. No necesitas modificar el AndroidManifest.xml.
 
 ### Ejecución
 
 1.  Clona o descarga este repositorio.
 2.  Abre el proyecto con Android Studio.
 3.  Espera a que Gradle sincronice todas las dependencias.
-4.  Selecciona un dispositivo y presiona el botón "Run" (▶️).
+4.  Selecciona un dispositivo y presiona el botón "Run".
 
 ## Retos y Soluciones
 
 Durante el desarrollo, surgieron varios desafíos técnicos que requirieron investigación y soluciones específicas:
 
-  * **Reto: `Authorization Failure` en la API de Google Maps.**
+  * **Reto: Authorization Failure en la API de Google Maps.**
 
       * **Problema:** A pesar de tener una clave de API correcta, el mapa no se cargaba debido a un fallo de autorización.
-      * **Solución:** El problema se localizó en las restricciones de la clave de API en Google Cloud Console. La huella digital **SHA-1** del certificado de depuración de la app no coincidía con la registrada. La solución definitiva fue generar la clave SHA-1 directamente desde Android Studio usando la tarea de Gradle `signingReport` y asegurarse de que tanto esa clave como el nombre del paquete (`com.calac.tracklim`) estuvieran correctamente añadidos a las restricciones de la clave.
+      * **Solución:** El problema se localizó en las restricciones de la clave de API en Google Cloud Console. La huella digital **SHA-1** del certificado de depuración de la app no coincidía con la registrada. La solución definitiva fue generar la clave SHA-1 directamente desde Android Studio usando la tarea de Gradle signingReport y asegurarse de que tanto esa clave como el nombre del paquete (com.calac.tracklim) estuvieran correctamente añadidos a las restricciones de la clave.
 
-  * **Reto: Conflictos con el Plugin `kotlin-parcelize`.**
+  * **Reto: Conflictos con el Plugin kotlin-parcelize.**
 
-      * **Problema:** Al intentar hacer los objetos `Circuit` transportables, surgieron errores contradictorios: `Unresolved reference 'Parcelize'` y, al añadir el plugin, `plugin is already on the classpath`.
-      * **Solución:** Se descubrió que las versiones modernas del plugin de Kotlin para Android ya incluyen la funcionalidad de `parcelize`. La solución fue utilizar la sintaxis específica `kotlin("parcelize")` en el archivo `build.gradle.kts`, lo que resolvió el conflicto y activó la anotación correctamente.
+      * **Problema:** Al intentar hacer los objetos Circuit transportables, surgieron errores contradictorios: Unresolved reference 'Parcelize' y, al añadir el plugin, plugin is already on the classpath.
+      * **Solución:** Se descubrió que las versiones modernas del plugin de Kotlin para Android ya incluyen la funcionalidad de parcelize. La solución fue utilizar la sintaxis específica kotlin("parcelize") en el archivo build.gradle.kts, lo que resolvió el conflicto y activó la anotación correctamente.
 
   * **Reto: Implementar un Modo Oscuro Persistente e Independiente del Sistema.**
 
       * **Problema:** Se requería que la app gestionara su propio estado de tema (claro/oscuro) y lo recordara entre sesiones.
-      * **Solución:** Se utilizó `SharedPreferences` para guardar la elección del usuario (un simple booleano `isNightMode`). En el `onCreate` de la `MainActivity`, se lee esta preferencia y se aplica el tema correspondiente usando `AppCompatDelegate.setDefaultNightMode()` **antes** de que la vista sea creada con `setContentView()`. El botón de cambio simplemente invierte el valor guardado en SharedPreferences y llama a la misma función para recrear la Activity con el nuevo tema.
+      * **Solución:** Se utilizó SharedPreferences para guardar la elección del usuario (un simple booleano isNightMode). En el onCreate de la MainActivity, se lee esta preferencia y se aplica el tema correspondiente usando AppCompatDelegate.setDefaultNightMode() **antes** de que la vista sea creada con setContentView(). El botón de cambio simplemente invierte el valor guardado en SharedPreferences y llama a la misma función para recrear la Activity con el nuevo tema.
